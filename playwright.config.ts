@@ -58,8 +58,17 @@ export default defineConfig({
                 baseURL: process.env.BASE_URL,
                 screenshot: "on",
                 video: "on",
+                storageState: 'storageState.json'
             },
             dependencies: ['setup']
         },
+
+
+        {
+            name: 'api_tests',
+            use: {
+                baseURL: process.env.API_URL,
+            },
+        }
     ]
 })

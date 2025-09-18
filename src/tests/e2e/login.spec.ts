@@ -1,20 +1,9 @@
 import {expect, test} from "@playwright/test";
 import LoginPage from "../../pages/LoginPage";
 
+test.use({storageState: {cookies: [], origins: []}})
 test.describe("Login page Tests", () => {
     test("Verify that login page is successfully loaded", async ({page, baseURL}) => {
-            // await page.goto(baseURL);
-            // await expect(page.getByRole('button', {name: 'flag'})).toBeVisible();
-            // await expect(page.getByRole('button', {name: 'Help '})).toBeVisible();
-            // await expect(page.locator('div').filter({hasText: /^BusNetwork$/})).toBeVisible();
-            // await expect(page.getByRole('heading', {name: 'Welcome!'})).toBeVisible();
-            // await expect(page.getByText('Email address')).toBeVisible();
-            // await expect(page.getByRole('textbox', {name: 'Enter your email address'})).toBeVisible();
-            // await expect(page.getByText('Password', {exact: true})).toBeVisible();
-            // await expect(page.getByRole('textbox', {name: 'Password'})).toBeVisible();
-            // await expect(page.getByText('Forgot your password?')).toBeVisible();
-            // await expect(page.getByRole('button', {name: 'Sign in '})).toBeVisible();
-
             let loginPage = new LoginPage(page)
             await loginPage.visit(baseURL)
             await loginPage.loginWithCredentials(process.env.USER_EMAIL!, process.env.USER_PASSWORD!)

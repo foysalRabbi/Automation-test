@@ -3,13 +3,6 @@ import {expect, test} from "@playwright/test";
 test.describe("Dashboard page Tests", () => {
     test("Verify that dashboard is displayed properly", async ({page, baseURL}) => {
         await page.goto(baseURL);
-        await page.getByRole('textbox', {name: 'Enter your email address'}).click();
-        await page.getByRole('textbox', {name: 'Enter your email address'}).fill(process.env.USER_EMAIL);
-        await page.getByRole('textbox', {name: 'Password'}).click();
-        await page.getByRole('textbox', {name: 'Password'}).fill(process.env.USER_PASSWORD!);
-        await page.getByRole('button', {name: 'Sign in '}).click();
-        await page.waitForTimeout(10_000)
-
         await expect(page.locator('#guide_button').getByRole('button')).toBeVisible();
         await expect(page.getByRole('button', {name: ''})).toBeVisible();
         await expect(page.getByRole('button', {name: 'SF'})).toBeVisible();
@@ -39,14 +32,6 @@ test.describe("Dashboard page Tests", () => {
 
     test("Verify that user information is displayed properly", async ({page, baseURL}) => {
         await page.goto(baseURL);
-        await page.getByRole('textbox', {name: 'Enter your email address'}).click();
-        await page.getByRole('textbox', {name: 'Enter your email address'}).fill(process.env.USER_EMAIL);
-        await page.getByRole('textbox', {name: 'Password'}).click();
-        await page.getByRole('textbox', {name: 'Password'}).fill(process.env.USER_PASSWORD!);
-        await page.getByRole('button', {name: 'Sign in '}).click();
-        await page.waitForTimeout(10_000)
-        await page.pause();
-
         await page.getByRole('button', {name: 'SF'}).click();
         await page.locator('#overlay_menu img').click();
         await expect(page.locator('#overlay_menu img')).toBeVisible();
