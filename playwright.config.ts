@@ -23,11 +23,43 @@ export default defineConfig({
     expect: {
         timeout: 7000
     },
-    use: {
-        baseURL: process.env.BASE_URL,
-        screenshot: "on",
-        video: "on",
-        headless: false,
-        browserName: "chromium"
-    }
+
+    projects: [
+        {
+            name: 'setup',
+            testMatch: /.*global\.setup\.ts/,
+            use: {
+                browserName: 'chromium',
+                headless: false,
+                baseURL: process.env.BASE_URL,
+                screenshot: "on",
+                video: "on",
+            },
+            teardown: 'teardown'
+        },
+
+        {
+            name: 'teardown',
+            testMatch: /.*global\.teardown\.ts/,
+            use: {
+                browserName: 'chromium',
+                headless: false,
+                baseURL: process.env.BASE_URL,
+                screenshot: "on",
+                video: "on",
+            }
+        },
+
+        {
+            name: 'e2e',
+            use: {
+                browserName: 'chromium',
+                headless: false,
+                baseURL: process.env.BASE_URL,
+                screenshot: "on",
+                video: "on",
+            },
+            dependencies: ['setup']
+        },
+    ]
 })

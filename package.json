@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "test:e2e": "npx playwright test",
     "test:ui": "npx playwright test --ui",
-    "test:e2e_login": "npx playwright test src/tests/e2e/login.spec.ts",
+    "test:e2e_login": "npx playwright test --project=e2e",
     "test:e2e_params": "npx playwright test src/tests/e2e/parameterized.spec.ts",
     "test:codegen": "npx playwright codegen https://test.busnetwork.net"
   },
