@@ -10,12 +10,8 @@ export const csvData = parse(fs.readFileSync('./data/users.csv'), {
     skip_empty_lines: true
 });
 
-// console.log(process.env.BASE_URL)
-// console.log(process.env.USER_EMAIL)
-// console.log(process.env.USER_PASSWORD)
-
 export default defineConfig({
-    timeout: 5 * 60 * 1000,
+    timeout: 2 * 60 * 1000,
     testDir: 'src/tests/',
     fullyParallel: false,
     workers: 1,
@@ -23,7 +19,6 @@ export default defineConfig({
     expect: {
         timeout: 7000
     },
-
     projects: [
         {
             name: 'setup',
@@ -62,7 +57,6 @@ export default defineConfig({
             },
             dependencies: ['setup']
         },
-
 
         {
             name: 'api_tests',
