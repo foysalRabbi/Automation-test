@@ -12,8 +12,10 @@ export default class LoginPage {
     signInBtn = () => this.page.getByRole('button', {name: 'Sign in '});
     guideBtn = () => this.page.locator('#guide_button').getByRole('button');
     userProfile = () => this.page.locator("#userDropdown");
+    settings = () => this.page.locator("#settings_button");
     userRole = () => this.page.locator("//span[@class='extended-light-green-bg rounded px-2 fw-bold']");
     failedMsg = () => this.page.locator("//p[@class='text-center fw-bold text-danger p-3']");
+    flagItems = () => this.page.locator("#overlay_menu").getByRole("listitem");
 
     async visit(url: string) {
         await this.page.goto(url)
@@ -39,5 +41,19 @@ export default class LoginPage {
 
     async getLoginErrorMessage() {
         return this.failedMsg();
+    }
+
+    async openLangPopup() {
+        await this.settings().click()
+    }
+
+    async verifyLangSelection(languages: string[], locales: string[]) {
+        await expect(this.flagItems()).toHaveCount(4);
+        await expect(this.flagItems()).toContainText(languages);
+
+        for (let i = 0; i < await this.flagItems().count(); i++) {
+            await this.flagItems().nth(i).click();
+            expect(await this.page.evaluate(() => window.localStorage.getItem('locale'))).toStrictEqual(locales[i]);
+        }
     }
 }

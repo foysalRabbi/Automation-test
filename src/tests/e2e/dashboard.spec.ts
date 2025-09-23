@@ -1,4 +1,5 @@
 import {expect, test} from "@playwright/test";
+import LoginPage from "../../pages/LoginPage";
 
 test.describe("Dashboard page Tests", () => {
     test("Verify that dashboard is displayed properly", async ({page, baseURL}) => {
@@ -40,5 +41,14 @@ test.describe("Dashboard page Tests", () => {
         await expect(page.getByText(process.env.USER_EMAIL)).toBeVisible();
         await expect(page.getByRole('button', {name: 'Logout'})).toBeVisible();
         await expect(page.getByText(/Software Version: V\d+.\d+.\d+/)).toBeVisible();
+    });
+
+    test('User is able to select different language', async ({page, baseURL}) => {
+        const locales = ["da", "en", "no", "sv"];
+        const languages = ["Danish", "English", "Norwegian", "Swedish"];
+
+        await page.goto(baseURL!);
+        await new LoginPage(page).openLangPopup()
+        await new LoginPage(page).verifyLangSelection(languages, locales);
     });
 })

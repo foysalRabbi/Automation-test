@@ -25,15 +25,13 @@ test.describe("Login page Tests", () => {
         await new LoginPage(page).verifyLoginSuccess();
     })
 
-    test('User is able to select any language', async ({page, baseURL}) => {
+    test.only('User is able to select any language', async ({page, baseURL}) => {
+        const locales = ["da", "en", "no", "sv"];
+        const languages = ["Danish", "English", "Norwegian", "Swedish"];
+
         await page.goto(baseURL!);
         await expect(page.getByText('Email address')).toBeVisible();
         await page.getByRole("button").getByAltText("flag").click()
-        const listItems = page.locator("#overlay_menu").getByRole("listitem");
-        await expect(listItems).toHaveCount(4);
-        for (let i = 0; i < await listItems.count(); i++) {
-            await listItems.nth(i).click()
-        }
-        await expect(page.locator("#overlay_menu").getByRole("listitem")).toContainText([" Danish", " English", " Norwegian", " Swedish"]);
+        await new LoginPage(page).verifyLangSelection(languages, locales);
     });
 });
