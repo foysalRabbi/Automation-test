@@ -1,5 +1,6 @@
 import {expect, test} from "@playwright/test";
 import LoginPage from "../../pages/LoginPage";
+import {languages, locales} from "../../types/data_helper";
 
 test.use({storageState: {cookies: [], origins: []}})
 test.describe("Login page Tests", () => {
@@ -25,10 +26,7 @@ test.describe("Login page Tests", () => {
         await new LoginPage(page).verifyLoginSuccess();
     })
 
-    test.only('User is able to select any language', async ({page, baseURL}) => {
-        const locales = ["da", "en", "no", "sv"];
-        const languages = ["Danish", "English", "Norwegian", "Swedish"];
-
+    test('User is able to select any language', async ({page, baseURL}) => {
         await page.goto(baseURL!);
         await expect(page.getByText('Email address')).toBeVisible();
         await page.getByRole("button").getByAltText("flag").click()

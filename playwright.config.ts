@@ -11,7 +11,6 @@ export const csvData = parse(fs.readFileSync('./data/users.csv'), {
 });
 
 export default defineConfig({
-    timeout: 2 * 60 * 1000,
     testDir: 'src/tests/',
     fullyParallel: false,
     workers: 1,
@@ -20,6 +19,7 @@ export default defineConfig({
         timeout: 10_000
     },
     use: {
+        headless: false,
         baseURL: process.env.BASE_URL,
         ...devices['Desktop Chrome'],
         screenshot: "only-on-failure",

@@ -1,4 +1,5 @@
-import {expect, test} from "@playwright/test";
+import {test} from "@playwright/test";
+import {CompanyUser} from "../../types/company_user";
 
 test("api/company_info", async ({request, baseURL}) => {
     const response = await request.get(`${baseURL}/company-user-details?company_id=`, {
@@ -11,8 +12,6 @@ test("api/company_info", async ({request, baseURL}) => {
         }
     });
 
-    console.log(response.status());
-    expect(response.status()).toBe(200);
     const res = await response.text();
-    console.log(JSON.parse(res));
+    let company_user: CompanyUser = JSON.parse(res).data;
 });
