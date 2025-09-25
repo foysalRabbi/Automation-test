@@ -1,7 +1,7 @@
 import {expect, test} from "@playwright/test";
 import LoginPage from "../../pages/LoginPage";
 import {languages, locales, UserRoles} from "../../types/data_helper";
-import ApiHelper from "../../pages/ApiHelper";
+import ApiHelper from "../../helpers/ApiHelper";
 import {CompanyUser} from "../../types/company_user";
 
 let apiHelper: ApiHelper;
@@ -11,11 +11,11 @@ test.describe("Dashboard page Tests", () => {
     test.beforeEach(async ({page}) => {
         await page.goto("/");
         apiHelper = new ApiHelper(page);
-        await apiHelper.setAccessToken();
+        await apiHelper.setAccessTokenToHeader();
         company_user = await apiHelper.getCompanyUserInfo();
     });
+
     test("Verify that dashboard is displayed properly", async ({page}) => {
-        await page.goto("/");
         await expect(page.locator('#guide_button').getByRole('button')).toBeVisible();
         await expect(page.getByRole('button', {name: ''})).toBeVisible();
         await page.getByRole('button', {name: `${company_user.user_info.first_name[0]}${company_user.user_info.last_name[0]}`}).click();
@@ -44,7 +44,6 @@ test.describe("Dashboard page Tests", () => {
     })
 
     test("Verify that user information is displayed properly", async ({page}) => {
-        await page.goto("/");
         await page.getByRole('button', {name: `${company_user.user_info.first_name[0]}${company_user.user_info.last_name[0]}`}).click();
         await page.locator('#overlay_menu img').click();
         await expect(page.locator('#overlay_menu img')).toBeVisible();
@@ -56,7 +55,6 @@ test.describe("Dashboard page Tests", () => {
     });
 
     test('User is able to select different language', async ({page}) => {
-        await page.goto("/");
         let login = new LoginPage(page);
         await login.openLangPopup()
         await login.verifyLangSelection(languages, locales);

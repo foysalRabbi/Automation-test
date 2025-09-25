@@ -6,12 +6,16 @@ export default class ApiHelper extends Helper {
         super(page);
     }
 
-    async setAccessToken() {
-        const provider = "CognitoIdentityServiceProvider.7rh8b727r4kjsjo877q3ei9525."
-        const cognito_user = await this.getLocalStorage(`${provider}LastAuthUser`);
-        const accessToken = await this.getLocalStorage(`${provider}${cognito_user}.accessToken`);
+    async setAccessToken(username: string, password: string) {
+        await this.setLocalStorage({
+            key: 'AccessToken',
+            value: `Bearer ${await this.token(username, password)}`
+        });
+    }
+
+    async setAccessTokenToHeader() {
         await this.page.context().setExtraHTTPHeaders({
-            Authorization: `Bearer ${accessToken}`
+            Authorization: await this.getLocalStorage("AccessToken")
         });
     }
 
