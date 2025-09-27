@@ -10,6 +10,5 @@ test.describe("Landing page Tests", async () => {
     test("User should already be logged in2", async ({page, baseURL}) => {
         await page.goto(baseURL);
         await page.reload();
-
     })
 });

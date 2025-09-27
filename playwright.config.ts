@@ -1,4 +1,4 @@
-import {defineConfig} from "@playwright/test";
+import {defineConfig, devices} from "@playwright/test";
 import * as dotenv from "dotenv";
 import * as fs from "node:fs";
 import {parse} from "csv-parse/sync";
@@ -10,59 +10,41 @@ export const csvData = parse(fs.readFileSync('./data/users.csv'), {
     skip_empty_lines: true
 });
 
-// console.log(process.env.BASE_URL)
-// console.log(process.env.USER_EMAIL)
-// console.log(process.env.USER_PASSWORD)
-
 export default defineConfig({
-    timeout: 5 * 60 * 1000,
     testDir: 'src/tests/',
     fullyParallel: false,
     workers: 1,
-    reporter: [["html"]],
+    reporter: [["html", {open: "never"}]],
     expect: {
-        timeout: 7000
+        timeout: 10_000
     },
-
+    use: {
+        headless: false,
+        baseURL: process.env.BASE_URL,
+        ...devices['Desktop Chrome'],
+        screenshot: "only-on-failure",
+        video: "retain-on-failure",
+    },
     projects: [
         {
             name: 'setup',
             testMatch: /.*global\.setup\.ts/,
-            use: {
-                browserName: 'chromium',
-                headless: false,
-                baseURL: process.env.BASE_URL,
-                screenshot: "on",
-                video: "on",
-            },
-            teardown: 'teardown'
         },
 
         {
             name: 'teardown',
             testMatch: /.*global\.teardown\.ts/,
-            use: {
-                browserName: 'chromium',
-                headless: false,
-                baseURL: process.env.BASE_URL,
-                screenshot: "on",
-                video: "on",
-            }
         },
 
         {
             name: 'e2e',
             use: {
-                browserName: 'chromium',
                 headless: false,
-                baseURL: process.env.BASE_URL,
-                screenshot: "on",
-                video: "on",
                 storageState: 'storageState.json'
             },
-            dependencies: ['setup']
+            dependencies: ['setup'],
+            teardown: 'teardown',
         },
-
 
         {
             name: 'api_tests',

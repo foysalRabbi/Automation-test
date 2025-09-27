@@ -11,6 +11,11 @@ export default class LoginPage {
     passField = () => this.page.getByRole('textbox', {name: 'Password'})
     signInBtn = () => this.page.getByRole('button', {name: 'Sign in '});
     guideBtn = () => this.page.locator('#guide_button').getByRole('button');
+    userProfile = () => this.page.locator("#userDropdown");
+    settings = () => this.page.locator("#settings_button");
+    userRole = () => this.page.locator("//span[@class='extended-light-green-bg rounded px-2 fw-bold']");
+    failedMsg = () => this.page.locator("//p[@class='text-center fw-bold text-danger p-3']");
+    flagItems = () => this.page.locator("#overlay_menu").getByRole("listitem");
 
     async visit(url: string) {
         await this.page.goto(url)
@@ -23,10 +28,32 @@ export default class LoginPage {
         await this.passField().click();
         await this.passField().fill(password);
         await this.signInBtn().click();
-        await this.page.waitForTimeout(10_000)
     }
 
     async verifyLoginSuccess() {
-        await expect(this.guideBtn()).toBeVisible();
+        await expect(this.guideBtn()).toBeVisible({timeout: 15000});
+    }
+
+    async getUserRole() {
+        await this.userProfile().click();
+        return this.userRole();
+    }
+
+    async getLoginErrorMessage() {
+        return this.failedMsg();
+    }
+
+    async openLangPopup() {
+        await this.settings().click()
+    }
+
+    async verifyLangSelection(languages: string[], locales: string[]) {
+        await expect(this.flagItems()).toHaveCount(4);
+        await expect(this.flagItems()).toContainText(languages);
+
+        for (let i = 0; i < await this.flagItems().count(); i++) {
+            await this.flagItems().nth(i).click();
+            expect(await this.page.evaluate(() => window.localStorage.getItem('locale'))).toStrictEqual(locales[i]);
+        }
     }
 }
