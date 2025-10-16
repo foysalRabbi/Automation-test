@@ -20,7 +20,7 @@ export default defineConfig({
     },
     use: {
         headless: false,
-        baseURL: process.env.BASE_URL_TEST,
+        baseURL: process.env.BASE_URL,
         ...devices['Desktop Chrome'],
         screenshot: "only-on-failure",
         video: "retain-on-failure",
