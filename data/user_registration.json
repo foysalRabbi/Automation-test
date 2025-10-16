@@ -1,0 +1,23 @@
+{
+
+  "signup": {
+    "name": "Foysal Rabbi",
+    "email": "foysal@gmail.com",
+    "password": "123456",
+    "day": "8",
+    "month": "10",
+    "year": "1997"
+  },
+  "address": {
+    "first_name": "Foysal",
+    "last_name": "Rabbi",
+    "company": "Momentum Multimedia",
+    "address1": "Mirpur DOHS",
+    "address2": "Eastern Housing",
+    "country": "United States",
+    "state": "New York",
+    "city": "New York City",
+    "zipcode": "10006",
+    "mobile": "017353535544"
+  }
+}

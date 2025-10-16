@@ -1,7 +1,6 @@
-user,password,status,expected
-share_food@yopmail.com,Pass@1234,passed,Master admin
-marin_food@yopmail.com,Pass@1234,passed,Master admin
-faizulcse@yopmail.com,Pass@1234,passed,Admin
-invalid@yopmail.com,Pass@1234,failed,Incorrect username or password.
-share_food@yopmail.com,InvalidPass@1234,failed,Incorrect username or password.
-share_food@yopmail.com,InvalidPass@1234,failed,Incorrect username or password.
+title,price
+Printed Off Shoulder Top - White,Rs. 315
+Grunt Blue Slim Fit Jeans,Rs. 1400
+Stylish Dress,Rs. 1500
+Frozen Tops For Kids,Rs. 278
+Sleeves Top and Short - Blue & Pink,Rs. 478

@@ -4,7 +4,7 @@ import * as fs from "node:fs";
 import {parse} from "csv-parse/sync";
 
 dotenv.config({path: ".env.test"});
-export const testData = JSON.parse(fs.readFileSync('./data/users.json', 'utf-8'));
+export const userData = JSON.parse(fs.readFileSync('./data/user_registration.json', 'utf-8'));
 export const csvData = parse(fs.readFileSync('./data/users.csv'), {
     columns: true,
     skip_empty_lines: true
@@ -20,7 +20,7 @@ export default defineConfig({
     },
     use: {
         headless: false,
-        baseURL: process.env.BASE_URL,
+        baseURL: process.env.BASE_URL_TEST,
         ...devices['Desktop Chrome'],
         screenshot: "only-on-failure",
         video: "retain-on-failure",
